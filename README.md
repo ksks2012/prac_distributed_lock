@@ -6,7 +6,7 @@
 
 An implementation of Distributed Lock in golang
 
-## structure
+# structure
 
 - etc: setting file
 - docs: document
@@ -22,3 +22,15 @@ An implementation of Distributed Lock in golang
 - storage: temp file
 - scripts: build, install, analysis scripts
 - third_party: third_party tools
+
+# Go generate
+
+```sh
+go generate github.com/distributed_lock/internal/dao/dbversion/mysql
+```
+
+# Build
+
+```sh
+go build github.com/distributed_lock/cmd/db_lock
+```

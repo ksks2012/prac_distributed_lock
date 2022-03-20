@@ -1,0 +1,15 @@
+App:
+  RunMode: debug
+  ReadTimeout: 60
+  WriteTimeout: 60
+Database:
+  DBType: mysql
+  UserName: XXX
+  Password: XXX
+  Host: 127.0.0.1
+  DBName: DistributedLocks
+  TablePrefix: lock_
+  Charset: utf8
+  ParseTime: True
+  MaxIdleConns: 10
+  MaxOpenConns: 30
