@@ -36,5 +36,3 @@ Icon
 *.log
 *.png
 .glide/
-
-db_lock

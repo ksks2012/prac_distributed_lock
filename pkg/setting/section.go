@@ -8,6 +8,9 @@ type AppSettingS struct {
 	RunMode      string
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
+	LogSavePath string
+	LogFileName string
+	LogFileExt string
 }
 
 type DatabaseSettingS struct {

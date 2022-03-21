@@ -2,6 +2,9 @@ App:
   RunMode: debug
   ReadTimeout: 60
   WriteTimeout: 60
+  LogSavePath: storage/logs
+  LogFileName: app
+  LogFileExt: .log
 Database:
   DBType: mysql
   UserName: hong

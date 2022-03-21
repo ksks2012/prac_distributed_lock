@@ -52,3 +52,9 @@ Usage of ./db_lock:
   -mode string
         running level (info, debug)
 ```
+
+# Integration Testing
+
+```sh
+go build github.com/distributed_lock/testing/logger
+```
