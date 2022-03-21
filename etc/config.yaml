@@ -4,8 +4,8 @@ App:
   WriteTimeout: 60
 Database:
   DBType: mysql
-  UserName: XXX
-  Password: XXX
+  UserName: hong
+  Password: cwb+123
   Host: 127.0.0.1
   DBName: DistributedLocks
   TablePrefix: lock_

@@ -34,3 +34,21 @@ go generate github.com/distributed_lock/internal/dao/dbversion/mysql
 ```sh
 go build github.com/distributed_lock/cmd/db_lock
 ```
+
+# run
+
+## run db_lock
+
+```sh
+./db_lock -config ./etc/config.yaml -log_level debug
+```
+
+### args
+
+```sh
+Usage of ./db_lock:
+  -config string
+        assgin the path of config file (default "etc/")
+  -mode string
+        running level (info, debug)
+```
