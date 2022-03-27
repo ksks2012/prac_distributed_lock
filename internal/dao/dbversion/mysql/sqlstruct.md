@@ -69,3 +69,21 @@ CREATE TABLE `lock_exclusive_lock` (
    UNIQUE KEY `uidx_resource_name` (`resource_name`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Resource in exclusive lock';
 ```
+
+# Resource (resource) r.1
+
+* `const`: `sqlCreate`
+* `strip-spaces`
+
+```sql
+CREATE TABLE `lock_resource` (
+   `id` int(4) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+   `resource_name` varchar(64) NOT NULL DEFAULT '' COMMENT 'Locked resource name',
+   `share` varchar(64) NOT NULL DEFAULT '' COMMENT 'Status',
+   `version` int(20) NOT NULL DEFAULT '0' COMMENT 'Number of version',
+   `desc` varchar(1024) NOT NULL DEFAULT 'Remarks',
+   `modified_on` int(10) unsigned DEFAULT '0' COMMENT 'Save data time, automatically generated',
+   PRIMARY KEY (`id`),
+   UNIQUE KEY `uidx_resource_name` (`resource_name`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Resource in exclusive lock';
+```

@@ -127,7 +127,7 @@ func (eng *mySQLStorageEngine) prepareSchema() (err error) {
 		}
 	}
 	if !schemaRev.IsUpToDate() {
-		return fmt.Errorf("BlogService schema not up-to-date: %#v", schemaRev)
+		return fmt.Errorf("DistributedLocks schema not up-to-date: %#v", schemaRev)
 	}
 	return
 }

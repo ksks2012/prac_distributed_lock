@@ -20,21 +20,38 @@ const sqlCreateExclusiveLocks = "CREATE TABLE `lock_exclusive_lock` (" +
 	"UNIQUE KEY `uidx_resource_name` (`resource_name`) USING BTREE" +
 	") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Resource in exclusive lock'"
 
+const sqlCreateResource = "CREATE TABLE `lock_resource` (" +
+	"`id` int(4) NOT NULL AUTO_INCREMENT COMMENT 'Primary key'," +
+	"`resource_name` varchar(64) NOT NULL DEFAULT '' COMMENT 'Locked resource name'," +
+	"`share` varchar(64) NOT NULL DEFAULT '' COMMENT 'Status'," +
+	"`version` int(20) NOT NULL DEFAULT '0' COMMENT 'Number of version'," +
+	"`desc` varchar(1024) NOT NULL DEFAULT 'Remarks'," +
+	"`modified_on` int(10) unsigned DEFAULT '0' COMMENT 'Save data time, automatically generated'," +
+	"PRIMARY KEY (`id`)," +
+	"UNIQUE KEY `uidx_resource_name` (`resource_name`) USING BTREE" +
+	") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Resource in exclusive lock'"
+
 // ** SQL schema external filter
 
 const metaKeyDistributedLockMetaSchemaRev = "distributed-lock-meta.schema"
 const metaKeyExclusiveLocksSchemaRev = "exclusive-locks.schema"
+const metaKeyResourceSchemaRev = "resource.schema"
 
 const currentDistributedLockMetaSchemaRev = 1
 const currentExclusiveLocksSchemaRev = 1
+const currentResourceSchemaRev = 1
 
 type schemaRevision struct {
 	// TODO: unknown translation mode 0 for symbol [DistributedLockMeta]
 	ExclusiveLocks int32
+	Resource       int32
 }
 
 func (rev *schemaRevision) IsUpToDate() bool {
 	if currentExclusiveLocksSchemaRev != rev.ExclusiveLocks {
+		return false
+	}
+	if currentResourceSchemaRev != rev.Resource {
 		return false
 	}
 	return true
@@ -54,6 +71,9 @@ func (m *schemaManager) FetchSchemaRevision() (schemaRev *schemaRevision, err er
 	}
 	schemaRev = &schemaRevision{}
 	if schemaRev.ExclusiveLocks, _, err = metaStoreInst.FetchRevision(metaKeyExclusiveLocksSchemaRev); nil != err {
+		return nil, err
+	}
+	if schemaRev.Resource, _, err = metaStoreInst.FetchRevision(metaKeyResourceSchemaRev); nil != err {
 		return nil, err
 	}
 	return schemaRev, nil
@@ -91,4 +111,18 @@ func (m *schemaManager) UpgradeSchemaExclusiveLocks(currentRev int32) (schemaCha
 	return
 }
 
-// ** Generated code for 2 table entries
+func (m *schemaManager) UpgradeSchemaResource(currentRev int32) (schemaChanged bool, err error) {
+	switch currentRev {
+	case currentResourceSchemaRev:
+		return false, nil
+	case 0:
+		if err = m.execBaseSchemaModification(sqlCreateResource, metaKeyResourceSchemaRev, currentResourceSchemaRev); nil == err {
+			return true, nil
+		}
+	default:
+		err = fmt.Errorf("unknown resource schema revision: %d", currentRev)
+	}
+	return
+}
+
+// ** Generated code for 3 table entries

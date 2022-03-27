@@ -29,15 +29,17 @@ An implementation of Distributed Lock in golang
 go generate github.com/distributed_lock/internal/dao/dbversion/mysql
 ```
 
-# Build
+# cmd/db_lock
+
+A Pessimistic Lock with DB
+
+## Build
 
 ```sh
 go build github.com/distributed_lock/cmd/db_lock
 ```
 
-# run
-
-## run db_lock
+## run
 
 ```sh
 ./db_lock -config ./etc/config.yaml -log_level debug
@@ -47,6 +49,32 @@ go build github.com/distributed_lock/cmd/db_lock
 
 ```sh
 Usage of ./db_lock:
+  -config string
+        assgin the path of config file (default "etc/")
+  -mode string
+        running level (info, debug)
+```
+
+# cmd/resource_version
+
+A Optimistic Lock with DB
+
+## Build
+
+```sh
+go build github.com/distributed_lock/cmd/resource_version
+```
+
+## run
+
+```sh
+./resource_version -config ./etc/config.yaml -log_level debug
+```
+
+### args
+
+```sh
+Usage of ./resource_version:
   -config string
         assgin the path of config file (default "etc/")
   -mode string

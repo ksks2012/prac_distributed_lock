@@ -10,5 +10,6 @@ func (m *schemaManager) UpgradeSchema(currentRevs *schemaRevision) (schemaChange
 		LastError: nil,
 	}
 	status.RunUpgrade("exclusive-locks", m.UpgradeSchemaExclusiveLocks, currentRevs.ExclusiveLocks)
+	status.RunUpgrade("resource", m.UpgradeSchemaResource, currentRevs.Resource)
 	return status.Changed, status.LastError
 }
