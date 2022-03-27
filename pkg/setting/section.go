@@ -23,6 +23,7 @@ type DatabaseSettingS struct {
 	TablePrefix  string
 	Charset      string
 	ParseTime    bool
+	MaxLifetime  int
 	MaxIdleConns int
 	MaxOpenConns int
 }

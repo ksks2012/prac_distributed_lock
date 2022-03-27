@@ -7,12 +7,14 @@ import (
 	"os"
 	"os/signal"
 	"strings"
+	"strconv"
 	"golang.org/x/sys/unix"
 	"gopkg.in/natefinch/lumberjack.v2"
 
 
 	"github.com/distributed_lock/pkg/setting"
 	"github.com/distributed_lock/global"
+	"github.com/distributed_lock/internal/service"
 	"github.com/distributed_lock/internal/model"
 	"github.com/distributed_lock/internal/dao/config"
 	"github.com/distributed_lock/pkg/logger"
@@ -21,6 +23,7 @@ import (
 var (
 	runMode string
 	cfg     string
+	owner 	string
 )
 
 
@@ -56,12 +59,18 @@ func main() {
 	stopChannel := make(chan os.Signal, 1)
 	signal.Notify(stopChannel, os.Interrupt, unix.SIGTERM)
 
+	srv := service.New(ctx)
+	// for loop
+	for i := 1; i <= 10; i++ {
+		srv.GetLock(strconv.Itoa(i))
+	}
 	cancel()
 }
 
 func setupFlag() error {
 	flag.StringVar(&runMode, "mode", "", "running level (info, debug)")
 	flag.StringVar(&cfg, "config", "etc/", "assgin the path of config file")
+	flag.StringVar(&owner, "owner", "A", "set resource owner")
 	flag.Parse()
 
 	return nil

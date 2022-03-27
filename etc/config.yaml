@@ -14,5 +14,6 @@ Database:
   TablePrefix: lock_
   Charset: utf8
   ParseTime: True
+  MaxLifeTime: 10
   MaxIdleConns: 10
   MaxOpenConns: 30
